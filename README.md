@@ -1,42 +1,56 @@
-Project Overview:
-Objective:
 
-Create a dedicated infrastructure using AWS CloudFormation for the development team.
-Deploy an Apache web server with HTTP access on a small Amazon EC2 instance.
-Ensure the infrastructure is deployed in a dedicated VPC with a single public subnet.
-Tools and Services:
+# AWS CloudFormation Project: Development Team Infrastructure Setup
 
-AWS CloudFormation: For defining and provisioning the infrastructure using templates.
-AWS Cloud9: As the development environment for modifying CloudFormation templates.
-Amazon VPC: To create an isolated virtual network for the EC2 instance.
-Amazon EC2: To host the Apache web server.
-Security Groups: To manage network access to the EC2 instance.
-CloudFormation Drift Detection: To detect manual changes made outside of the CloudFormation template.
-Steps:
-1. Modify CloudFormation Template:
-Start with a base CloudFormation template.
-Modify it to define a dedicated Amazon VPC with a single public subnet.
-Add a t2.micro EC2 instance in the public subnet with an Apache web server installed.
-Ensure HTTP access by opening port 80 in the Security Group attached to the EC2 instance.
-2. Deploy the Infrastructure:
-Use the modified CloudFormation template to create a stack via the AWS Management Console or AWS CLI.
-Deploy the resources defined in the template, including the VPC, subnet, EC2 instance, and Security Group.
-3. Verify the Web Page:
-After the CloudFormation stack is created, verify the EC2 instance is running and accessible over HTTP by visiting the public IP address of the instance.
-Ensure the Apache web server is correctly serving a simple web page.
-4. Detect Drift:
-Manually modify the Security Group (for example, by adding or removing rules).
-Use AWS CloudFormation's Drift Detection feature to detect changes made manually outside the template.
-5. Update Security Group via Change Set:
-Create a change set to update the Security Group back to its expected state as defined in the CloudFormation template.
-Execute the change set to apply the update.
-Key Concepts:
-VPC: A virtual private cloud for isolating your AWS resources.
-EC2: A virtual server used for hosting the Apache web server.
-Security Group: Acts as a firewall, controlling the inbound and outbound traffic to the EC2 instance.
-CloudFormation Change Set: Allows you to review and apply changes to the stack before making them live.
-Drift Detection: Detects differences between the resources defined in the CloudFormation template and the actual state of AWS resources.
-Learning Outcomes:
-Understanding how to create and modify AWS CloudFormation templates.
-Deploying a web server using CloudFormation and validating its functionality.
-Using CloudFormation's Drift Detection and Change Set features to detect and correct manual changes to the infrastructure.
+## **Objective**
+The goal of this project is to create a dedicated infrastructure for a development team using AWS CloudFormation. This involves deploying an Apache web server on an Amazon EC2 instance within a dedicated VPC. The infrastructure will be provisioned, managed, and updated using AWS CloudFormation templates.
+
+### **Key Components:**
+- **Amazon EC2**: To host the Apache web server.
+- **Amazon VPC**: For creating an isolated network environment.
+- **AWS CloudFormation**: For defining the infrastructure as code.
+- **Security Groups**: For managing network access.
+
+## **Steps**
+
+### **1. Modify the CloudFormation Template**
+- Begin with a base CloudFormation template.
+- Modify the template to create:
+  - A dedicated **Amazon VPC** with a single **public subnet**.
+  - A **t2.micro EC2 instance** within the public subnet, which will run an Apache web server.
+  - A **Security Group** that allows HTTP access (port 80).
+  
+### **2. Deploy the Infrastructure**
+- Using AWS CloudFormation, create a **stack** to provision the infrastructure:
+  - VPC
+  - Public subnet
+  - EC2 instance
+  - Security Group
+- The deployment can be executed using the **AWS Management Console** or **AWS CLI**.
+
+### **3. Verify the Web Server**
+- Once the stack is created, confirm that the EC2 instance is running.
+- Access the instance via HTTP by visiting its public IP address.
+- Ensure that the Apache web server serves a simple web page.
+
+### **4. Use Drift Detection**
+- Manually modify the **Security Group** (e.g., by adding/removing rules).
+- Use AWS CloudFormation's **Drift Detection** feature to identify changes made outside the CloudFormation template.
+
+### **5. Apply Changes via Change Set**
+- Create a **change set** in CloudFormation to update the Security Group back to the expected state defined in the template.
+- Review and execute the change set to apply the updates.
+
+## **Key Concepts**
+- **VPC**: Virtual Private Cloud for isolating AWS resources.
+- **EC2**: Elastic Compute Cloud, used to host the web server.
+- **Security Group**: A virtual firewall that controls traffic to the EC2 instance.
+- **Change Set**: A mechanism to preview and apply changes to the CloudFormation stack.
+- **Drift Detection**: A feature to detect differences between the actual state of the infrastructure and the CloudFormation template.
+
+## **Learning Outcomes**
+- Gain hands-on experience in creating and modifying AWS CloudFormation templates.
+- Deploy a web server using CloudFormation and verify its functionality.
+- Understand how to use **Drift Detection** and **Change Sets** to detect and correct manual changes made to the infrastructure.
+
+---
+
