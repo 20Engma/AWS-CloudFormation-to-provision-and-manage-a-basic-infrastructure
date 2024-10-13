@@ -1,0 +1,74 @@
+
+# CloudFormation Project: Stack Creation and Drift Detection
+
+### Steps:
+
+1. **Open the Cloud9 Environment:**
+   - Open your Cloud9 environment where you'll work on the project.
+
+2. **Access CloudFormation Templates:**
+   - In the AWS Cloud9 file tree pane, navigate to the `templates` folder to view the available CloudFormation templates.
+
+3. **Change Directory to Templates Folder:**
+   ```bash
+   cd ~/environment/templates
+   ```
+
+4. **Launch Stack Creation:**
+   - Use the following command in the terminal to create the stack with inline parameters:
+   ```bash
+   aws cloudformation create-stack --stack-name Temp --parameters ParameterKey=InstanceType,ParameterValue=t2.micro --template-body file://Temp.yaml
+   ```
+
+5. **Query Stack Creation Status (Console View):**
+   - To monitor the creation status of the stack, run this command:
+   ```bash
+   aws cloudformation describe-stacks --stack-name Temp
+   ```
+
+6. **Query Stack Creation Status (CLI View):**
+   - Use the following command to check the stack's creation status and query specific stack details:
+   ```bash
+   aws cloudformation describe-stacks --stack-name Temp --query "Stacks[0].StackStatus"
+   ```
+
+7. **Verify Security Group Settings:**
+   - After the stack creation, verify the security group settings through the AWS Management Console.
+
+8. **Generate a Drift Report:**
+   - Detect drift in the template using the AWS Management Console.
+     - Navigate to **CloudFormation > Stacks > Temp** in the browser.
+     - In the stack details pane, choose the **Stack actions** drop-down and select **Detect drift**.
+     - Wait for AWS CloudFormation to complete the drift detection process, then refresh the page.
+     - With the stack selected, go to **Stack actions** and select **View drift results**.
+     - Under **Resource drift status**, choose the **InstanceSecurityGroup** resource that has the status of **MODIFIED**.
+     - Click **View drift details** to see the changes.
+
+9. **View Drift Detection Results via CLI:**
+   - Run the following command to get drift details from the CLI:
+   ```bash
+   aws cloudformation describe-stack-resource-drifts --stack-name Temp --stack-resource-drift-status-filters MODIFIED DELETED
+   ```
+   **Note:** In the results, look for **Resource Type SecurityGroup** and **PropertyDifferences**. The results should align with the drift information seen in the AWS CloudFormation dashboard.
+
+10. **Create the Change Set:**
+   - Change to the templates directory:
+   ```bash
+   cd ~/environment/templates
+   ```
+
+11. **Launch the Change Set Process:**
+   - Use the following command to create the change set:
+   ```bash
+   aws cloudformation create-change-set --stack-name Temp --change-set-name TempChangeSet --parameters ParameterKey=InstanceType,ParameterValue=t2.micro --template-body file://Temp-CS.yaml
+   ```
+
+12. **Execute the Change Set:**
+   - Verify that the changes match your expectations for the `InstanceSecurityGroup` resource.
+   - In the AWS Management Console, select **Execute change set** at the top-right of the page.
+
+13. **Verify AppURL:**
+   - After applying the changes, ensure the application is accessible.
+     - In the CloudFormation console, go to the **Outputs** tab of your stack.
+     - Launch the URL shown to verify the security group changes have been applied correctly.
+
